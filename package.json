@@ -22,6 +22,6 @@
   },
   "type": "module",
   "bin": {
-    "gendiff": "bin/gendiff.js"
+    "gendiff": "bin/gendiff-cli.js"
   }
 }
