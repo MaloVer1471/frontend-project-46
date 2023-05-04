@@ -11,9 +11,7 @@ program
   .description('Compares two configuration files and shows a difference.')
   .option('-f, --formft <type>', 'output format', 'stylish')
   .arguments('<filepath1> <filepath2>')
-    .action((filePath1, filePath2, options) => {
-        console.log(genDiff(filePath1, filePath2));
-    });
-  
-
-program.parse(); 
+  .action((filePath1, filePath2) => {
+    console.log(genDiff(filePath1, filePath2));
+  });
+program.parse();
