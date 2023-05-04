@@ -1,36 +1,23 @@
-name: Node CI
+name: tests and linter status
 
-on:
-  - push
-  - pull_request
+on: push
 
 env:
   CI: true
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x]
-
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+      - name: test and lint
+        uses: actions/checkout@v3
       - run: make install
       - run: make lint
       - run: make test
-       - name: Test & publish code coverage
-          uses: paambaati/codeclimate-action@v3.0.0
-          env:
-            CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v3.2.0
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          coverageCommand: make test-coverage
+          coverageCommand: npm test -- --coverage --coverageProvider=v8
           debug: true
